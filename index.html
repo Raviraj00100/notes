@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="MyNotes — All Your Notes. One Place. The personal study & notes-management app for students." />
+  <meta name="keywords" content="notes app, student notes, study notes, pdf notes, MyNotes" />
+  <title>MyNotes — All Your Notes. One Place.</title>
+  <link rel="icon" href="logo.jpg" type="image/jpeg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="splash-screen">
+      <div class="splash-content">
+        <img src="logo.jpg" alt="MyNotes Logo" class="splash-logo" />
+        <h1 class="splash-title">MyNotes</h1>
+        <p class="splash-tagline">All Your Notes. One Place.</p>
+        <div class="splash-loader">
+          <div class="splash-loader-bar"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main App (hidden until splash finishes) -->
+    <div id="main-app" class="main-app hidden">
+
+      <!-- Sidebar (Desktop) -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <div class="sidebar-brand">
+            <img src="logo.jpg" alt="MyNotes" class="sidebar-logo" />
+            <span class="sidebar-title">MyNotes</span>
+          </div>
+          <button class="sidebar-toggle" id="sidebar-close" aria-label="Close Sidebar">&#10005;</button>
+        </div>
+
+        <nav class="sidebar-nav">
+          <a href="#" class="nav-item active" data-page="home" id="nav-home">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Home</span>
+          </a>
+          <a href="#" class="nav-item" data-page="notes" id="nav-notes">
+            <span class="nav-icon">📚</span>
+            <span class="nav-label">My Notes</span>
+          </a>
+          <a href="#" class="nav-item" data-page="create" id="nav-create">
+            <span class="nav-icon">➕</span>
+            <span class="nav-label">Create Note</span>
+          </a>
+          <a href="#" class="nav-item" data-page="upload" id="nav-upload">
+            <span class="nav-icon">📤</span>
+            <span class="nav-label">Upload</span>
+          </a>
+          <a href="#" class="nav-item" data-page="search" id="nav-search">
+            <span class="nav-icon">🔎</span>
+            <span class="nav-label">Search</span>
+          </a>
+          <a href="#" class="nav-item" data-page="favorites" id="nav-favorites">
+            <span class="nav-icon">⭐</span>
+            <span class="nav-label">Favorites</span>
+          </a>
+          <a href="#" class="nav-item" data-page="reminders" id="nav-reminders">
+            <span class="nav-icon">🔔</span>
+            <span class="nav-label">Reminders</span>
+          </a>
+          <a href="#" class="nav-item" data-page="categories" id="nav-categories">
+            <span class="nav-icon">📂</span>
+            <span class="nav-label">Categories</span>
+          </a>
+          <a href="#" class="nav-item" data-page="recycle" id="nav-recycle">
+            <span class="nav-icon">🗑️</span>
+            <span class="nav-label">Recycle Bin</span>
+          </a>
+          <a href="#" class="nav-item" data-page="settings" id="nav-settings">
+            <span class="nav-icon">⚙️</span>
+            <span class="nav-label">Settings</span>
+          </a>
+        </nav>
+
+        <div class="sidebar-storage">
+          <div class="storage-label">
+            <span>Storage</span>
+            <span id="sidebar-storage-pct">0%</span>
+          </div>
+          <div class="storage-bar">
+            <div class="storage-bar-fill" id="sidebar-storage-fill" style="width:0%"></div>
+          </div>
+          <div class="storage-detail" id="sidebar-storage-detail">0 KB used</div>
+        </div>
+      </aside>
+
+      <!-- Page Content -->
+      <div class="page-wrapper">
+        <!-- Top Bar -->
+        <header class="topbar">
+          <button class="hamburger" id="hamburger" aria-label="Open Menu">
+            <span></span><span></span><span></span>
+          </button>
+          <div class="topbar-title" id="topbar-title">Home</div>
+          <div class="topbar-actions">
+            <button class="topbar-btn" id="theme-toggle" aria-label="Toggle Dark Mode" title="Toggle Dark Mode">🌙</button>
+            <div class="topbar-avatar" id="topbar-avatar" title="Profile">R</div>
+          </div>
+        </header>
+
+        <!-- Pages -->
+        <main class="pages" id="pages">
+
+          <!-- HOME PAGE -->
+          <section class="page active" id="page-home">
+            <div class="page-content">
+              <div class="home-greeting" id="home-greeting">Good Morning 👋</div>
+              <p class="home-sub">What are you studying today?</p>
+
+              <!-- Search Bar -->
+              <div class="search-bar-wrap">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="home-search" class="search-input" placeholder="Search your notes..." aria-label="Search notes" />
+              </div>
+
+              <!-- Quick Actions -->
+              <div class="section-header">
+                <h2 class="section-title">Quick Actions</h2>
+              </div>
+              <div class="quick-actions">
+                <button class="qa-btn" id="qa-new-note" data-page="create">
+                  <span class="qa-icon">➕</span>
+                  <span class="qa-label">New Note</span>
+                </button>
+                <button class="qa-btn" id="qa-upload" data-page="upload">
+                  <span class="qa-icon">📤</span>
+                  <span class="qa-label">Upload File</span>
+                </button>
+                <button class="qa-btn" id="qa-favorites" data-page="favorites">
+                  <span class="qa-icon">⭐</span>
+                  <span class="qa-label">Favorites</span>
+                </button>
+                <button class="qa-btn" id="qa-pinned" data-page="pinned">
+                  <span class="qa-icon">📌</span>
+                  <span class="qa-label">Pinned</span>
+                </button>
+              </div>
+
+              <!-- Upcoming Reminders -->
+              <div id="home-reminders-section" class="home-reminders-section hidden">
+                <div class="section-header">
+                  <h2 class="section-title">🔔 Upcoming Reminders</h2>
+                </div>
+                <div id="home-reminders-list" class="home-reminders-list"></div>
+              </div>
+
+              <!-- Pinned Notes -->
+              <div id="home-pinned-section" class="pinned-section hidden">
+                <div class="section-header">
+                  <h2 class="section-title">📌 Pinned Notes</h2>
+                </div>
+                <div id="home-pinned-list" class="note-grid"></div>
+              </div>
+
+              <!-- Recent Notes -->
+              <div class="section-header">
+                <h2 class="section-title">🕐 Recent Notes</h2>
+                <a href="#" class="see-all" data-page="notes">See All</a>
+              </div>
+              <div id="home-recent-list" class="note-grid">
+                <div class="empty-state">
+                  <div class="empty-icon">📝</div>
+                  <p>No notes yet. Create your first note!</p>
+                  <button class="btn btn-primary" data-page="create">Create Note</button>
+                </div>
+              </div>
+
+              <!-- Categories -->
+              <div class="section-header">
+                <h2 class="section-title">📂 Categories</h2>
+                <a href="#" class="see-all" data-page="categories">Manage</a>
+              </div>
+              <div id="home-categories" class="category-chips"></div>
+            </div>
+          </section>
+
+          <!-- MY NOTES PAGE -->
+          <section class="page" id="page-notes">
+            <div class="page-content">
+              <div class="page-toolbar">
+                <div class="view-toggle">
+                  <button class="view-btn active" id="grid-view-btn" aria-label="Grid view" title="Grid View">⊞</button>
+                  <button class="view-btn" id="list-view-btn" aria-label="List view" title="List View">☰</button>
+                </div>
+                <select class="sort-select" id="notes-sort" aria-label="Sort notes">
+                  <option value="updatedAt">Recently Updated</option>
+                  <option value="createdAt">Recently Added</option>
+                  <option value="title">A–Z</option>
+                  <option value="favorites">Favorites</option>
+                  <option value="pinned">Pinned</option>
+                </select>
+                <select class="sort-select" id="notes-category-filter" aria-label="Filter by category">
+                  <option value="all">All Categories</option>
+                </select>
+              </div>
+              <div id="notes-list" class="note-grid"></div>
+            </div>
+          </section>
+
+          <!-- CREATE / EDIT NOTE PAGE -->
+          <section class="page" id="page-create">
+            <div class="page-content">
+              <div class="form-card">
+                <h2 class="form-title" id="note-form-title">✏️ Create Note</h2>
+                <input type="hidden" id="note-id" value="" />
+                <div class="form-group">
+                  <label class="form-label" for="note-title">Title *</label>
+                  <input type="text" id="note-title" class="form-input" placeholder="e.g. Java Inheritance" maxlength="120" />
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="note-subject">Subject</label>
+                    <input type="text" id="note-subject" class="form-input" placeholder="e.g. Java" maxlength="60" />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="note-category">Category</label>
+                    <select id="note-category" class="form-input"></select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="note-content">Content</label>
+                  <div class="editor-toolbar">
+                    <button type="button" class="editor-btn" data-cmd="bold" title="Bold"><b>B</b></button>
+                    <button type="button" class="editor-btn" data-cmd="italic" title="Italic"><i>I</i></button>
+                    <button type="button" class="editor-btn" data-cmd="underline" title="Underline"><u>U</u></button>
+                    <span class="editor-sep"></span>
+                    <button type="button" class="editor-btn" data-cmd="insertUnorderedList" title="Bullet List">• List</button>
+                    <button type="button" class="editor-btn" data-cmd="insertOrderedList" title="Numbered List">1. List</button>
+                    <span class="editor-sep"></span>
+                    <button type="button" class="editor-btn" data-cmd="h2" title="Heading">H2</button>
+                    <button type="button" class="editor-btn" data-cmd="h3" title="Sub-heading">H3</button>
+                  </div>
+                  <div id="note-content" class="note-editor" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Note content" placeholder="Write your notes here..."></div>
+                </div>
+                <div class="form-options">
+                  <label class="toggle-label">
+                    <input type="checkbox" id="note-favorite" class="toggle-input" />
+                    <span class="toggle-slider"></span>
+                    <span>⭐ Add to Favorites</span>
+                  </label>
+                  <label class="toggle-label">
+                    <input type="checkbox" id="note-pin" class="toggle-input" />
+                    <span class="toggle-slider"></span>
+                    <span>📌 Pin Note</span>
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="note-reminder">🔔 Reminder (optional)</label>
+                  <input type="datetime-local" id="note-reminder" class="form-input" />
+                </div>
+                <div class="form-actions">
+                  <button class="btn btn-secondary" id="cancel-note">Cancel</button>
+                  <button class="btn btn-primary" id="save-note">💾 Save Note</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- UPLOAD PAGE -->
+          <section class="page" id="page-upload">
+            <div class="page-content">
+              <div class="form-card">
+                <h2 class="form-title">📤 Upload Notes</h2>
+
+                <!-- Drop Zone -->
+                <div class="drop-zone" id="drop-zone" role="button" tabindex="0" aria-label="Upload file drop zone">
+                  <div class="drop-zone-inner">
+                    <div class="drop-icon">📁</div>
+                    <p class="drop-title">Drag & Drop your file here</p>
+                    <p class="drop-sub">or click to browse</p>
+                    <p class="drop-types">PDF · JPG · PNG · DOC · DOCX</p>
+                    <input type="file" id="file-input" class="file-input-hidden" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" aria-label="Choose file" />
+                  </div>
+                </div>
+
+                <!-- Upload Progress -->
+                <div id="upload-progress-wrap" class="upload-progress-wrap hidden">
+                  <div class="upload-file-info">
+                    <span class="upload-file-icon" id="upload-file-icon">📄</span>
+                    <div>
+                      <div class="upload-file-name" id="upload-file-name">file.pdf</div>
+                      <div class="upload-file-size" id="upload-file-size">0 KB</div>
+                    </div>
+                    <button class="upload-cancel-btn" id="upload-cancel-btn" aria-label="Cancel upload">✕</button>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="progress-bar-fill" id="upload-progress-fill"></div>
+                  </div>
+                  <div class="progress-label" id="upload-progress-label">Uploading... 0%</div>
+                </div>
+
+                <!-- File Metadata Form -->
+                <div id="upload-meta-form" class="upload-meta-form hidden">
+                  <div class="form-group">
+                    <label class="form-label" for="upload-title">Title *</label>
+                    <input type="text" id="upload-title" class="form-input" placeholder="e.g. Java OOP Unit 2" maxlength="120" />
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label class="form-label" for="upload-subject">Subject</label>
+                      <input type="text" id="upload-subject" class="form-input" placeholder="e.g. Java" maxlength="60" />
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="upload-category">Category</label>
+                      <select id="upload-category" class="form-input"></select>
+                    </div>
+                  </div>
+                  <div class="form-options">
+                    <label class="toggle-label">
+                      <input type="checkbox" id="upload-favorite" class="toggle-input" />
+                      <span class="toggle-slider"></span>
+                      <span>⭐ Add to Favorites</span>
+                    </label>
+                    <label class="toggle-label">
+                      <input type="checkbox" id="upload-pin" class="toggle-input" />
+                      <span class="toggle-slider"></span>
+                      <span>📌 Pin Note</span>
+                    </label>
+                  </div>
+                  <div class="form-actions">
+                    <button class="btn btn-secondary" id="upload-cancel-form">Cancel</button>
+                    <button class="btn btn-primary" id="upload-save">💾 Save File</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SEARCH PAGE -->
+          <section class="page" id="page-search">
+            <div class="page-content">
+              <div class="search-hero">
+                <div class="search-bar-wrap large">
+                  <span class="search-icon">🔍</span>
+                  <input type="text" id="search-input" class="search-input" placeholder="Search notes, subjects, content..." aria-label="Search" />
+                  <button class="search-clear" id="search-clear" aria-label="Clear search">✕</button>
+                </div>
+                <div class="search-filters">
+                  <button class="filter-btn active" data-filter="all" id="filter-all">All</button>
+                  <button class="filter-btn" data-filter="note" id="filter-notes">Notes</button>
+                  <button class="filter-btn" data-filter="pdf" id="filter-pdfs">PDFs</button>
+                  <button class="filter-btn" data-filter="image" id="filter-images">Images</button>
+                </div>
+              </div>
+              <div id="search-results" class="note-grid">
+                <div class="empty-state">
+                  <div class="empty-icon">🔎</div>
+                  <p>Start typing to search your notes</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- FAVORITES PAGE -->
+          <section class="page" id="page-favorites">
+            <div class="page-content">
+              <div class="section-header">
+                <h2 class="section-title">⭐ Favorite Notes</h2>
+              </div>
+              <div id="favorites-list" class="note-grid">
+                <div class="empty-state">
+                  <div class="empty-icon">⭐</div>
+                  <p>No favorites yet. Star notes to add them here.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- PINNED PAGE (sub-view) -->
+          <section class="page" id="page-pinned">
+            <div class="page-content">
+              <div class="section-header">
+                <h2 class="section-title">📌 Pinned Notes</h2>
+              </div>
+              <div id="pinned-list" class="note-grid">
+                <div class="empty-state">
+                  <div class="empty-icon">📌</div>
+                  <p>No pinned notes. Pin important notes for quick access.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- REMINDERS PAGE -->
+          <section class="page" id="page-reminders">
+            <div class="page-content">
+              <div class="section-header">
+                <h2 class="section-title">🔔 Study Reminders</h2>
+                <button class="btn btn-primary btn-sm" id="add-reminder-btn">+ Add Reminder</button>
+              </div>
+              <div id="reminders-list" class="reminders-list"></div>
+            </div>
+          </section>
+
+          <!-- CATEGORIES PAGE -->
+          <section class="page" id="page-categories">
+            <div class="page-content">
+              <div class="section-header">
+                <h2 class="section-title">📂 Folders & Categories</h2>
+                <button class="btn btn-primary btn-sm" id="add-category-btn">+ Create Category</button>
+              </div>
+              <div id="categories-grid" class="categories-grid"></div>
+            </div>
+          </section>
+
+          <!-- RECYCLE BIN PAGE -->
+          <section class="page" id="page-recycle">
+            <div class="page-content">
+              <div class="section-header">
+                <h2 class="section-title">🗑️ Recycle Bin</h2>
+                <button class="btn btn-danger btn-sm" id="empty-recycle-btn">Empty Bin</button>
+              </div>
+              <p class="recycle-info">Deleted notes are kept here for 30 days before being permanently removed.</p>
+              <div id="recycle-list" class="note-grid"></div>
+            </div>
+          </section>
+
+          <!-- SETTINGS PAGE -->
+          <section class="page" id="page-settings">
+            <div class="page-content">
+              <div class="settings-list">
+
+                <div class="settings-section-title">Account</div>
+                <div class="settings-item" id="settings-profile">
+                  <div class="settings-item-left">
+                    <span class="settings-icon">👤</span>
+                    <div>
+                      <div class="settings-label">Profile</div>
+                      <div class="settings-sub" id="settings-username-display">Student</div>
+                    </div>
+                  </div>
+                  <span class="settings-arrow">›</span>
+                </div>
+
+                <div class="settings-section-title">Appearance</div>
+                <div class="settings-item">
+                  <div class="settings-item-left">
+                    <span class="settings-icon">🌙</span>
+                    <div>
+                      <div class="settings-label">Dark Mode</div>
+                      <div class="settings-sub">Switch between light and dark</div>
+                    </div>
+                  </div>
+                  <label class="toggle-label no-text">
+                    <input type="checkbox" id="settings-dark-mode" class="toggle-input" />
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+
+                <div class="settings-section-title">Data</div>
+                <div class="settings-item" id="settings-backup">
+                  <div class="settings-item-left">
+                    <span class="settings-icon">💾</span>
+                    <div>
+                      <div class="settings-label">Backup Notes</div>
+                      <div class="settings-sub">Export all your notes as JSON</div>
+                    </div>
+                  </div>
+                  <span class="settings-arrow">›</span>
+                </div>
+                <div class="settings-item" id="settings-restore">
+                  <div class="settings-item-left">
+                    <span class="settings-icon">📥</span>
+                    <div>
+                      <div class="settings-label">Restore Notes</div>
+                      <div class="settings-sub">Import notes from a backup file</div>
+                    </div>
+                  </div>
+                  <span class="settings-arrow">›</span>
+                </div>
+                <input type="file" id="restore-file-input" accept=".json" class="file-input-hidden" />
+
+                <div class="settings-section-title">Storage & Bin</div>
+                <div class="settings-item" id="settings-storage-item">
+                  <div class="settings-item-left">
+                    <span class="settings-icon">📊</span>
+                    <div>
+                      <div class="settings-label">Storage</div>
+                      <div class="settings-sub" id="settings-storage-info">Calculating...</div>
+                    </div>
+                  </div>
+                  <span class="settings-arrow">›</span>
+                </div>
+                <div class="settings-item" id="settings-recycle-item">
+                  <div class="settings-item-left">
+                    <span class="settings-icon">🗑️</span>
+                    <div>
+                      <div class="settings-label">Recycle Bin</div>
+                      <div class="settings-sub" id="settings-recycle-info">0 items</div>
+                    </div>
+                  </div>
+                  <span class="settings-arrow">›</span>
+                </div>
+
+                <div class="settings-section-title">About</div>
+                <div class="settings-item">
+                  <div class="settings-item-left">
+                    <span class="settings-icon">ℹ️</span>
+                    <div>
+                      <div class="settings-label">About MyNotes</div>
+                      <div class="settings-sub">Version 1.0.0 — A student productivity app</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          <!-- NOTE VIEWER PAGE -->
+          <section class="page" id="page-viewer">
+            <div class="page-content">
+              <div class="viewer-header">
+                <button class="btn btn-ghost" id="viewer-back">← Back</button>
+                <div class="viewer-actions">
+                  <button class="btn btn-ghost" id="viewer-edit" title="Edit">✏️ Edit</button>
+                  <button class="btn btn-ghost" id="viewer-favorite" title="Toggle Favorite">⭐</button>
+                  <button class="btn btn-ghost" id="viewer-pin" title="Toggle Pin">📌</button>
+                  <button class="btn btn-ghost" id="viewer-download" title="Download">📥</button>
+                  <button class="btn btn-danger" id="viewer-delete" title="Delete">🗑️</button>
+                </div>
+              </div>
+              <div class="viewer-body" id="viewer-body">
+                <!-- Filled dynamically -->
+              </div>
+            </div>
+          </section>
+
+          <!-- STORAGE PAGE -->
+          <section class="page" id="page-storage">
+            <div class="page-content">
+              <div class="storage-card">
+                <h2 class="storage-title">📊 Storage</h2>
+                <div class="storage-used" id="storage-used-label">0 KB used</div>
+                <div class="storage-bar large">
+                  <div class="storage-bar-fill" id="storage-main-fill" style="width:0%"></div>
+                </div>
+                <div class="storage-pct" id="storage-main-pct">0% of estimated quota</div>
+                <div class="storage-stats">
+                  <div class="storage-stat">
+                    <span class="stat-val" id="storage-files-count">0</span>
+                    <span class="stat-label">Files</span>
+                  </div>
+                  <div class="storage-stat">
+                    <span class="stat-val" id="storage-notes-count">0</span>
+                    <span class="stat-label">Notes</span>
+                  </div>
+                  <div class="storage-stat">
+                    <span class="stat-val" id="storage-categories-count">0</span>
+                    <span class="stat-label">Categories</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </main>
+
+        <!-- Bottom Nav (Mobile) -->
+        <nav class="bottom-nav" id="bottom-nav">
+          <a href="#" class="bnav-item active" data-page="home" id="bnav-home">
+            <span class="bnav-icon">🏠</span>
+            <span class="bnav-label">Home</span>
+          </a>
+          <a href="#" class="bnav-item" data-page="notes" id="bnav-notes">
+            <span class="bnav-icon">📚</span>
+            <span class="bnav-label">Notes</span>
+          </a>
+          <a href="#" class="bnav-item bnav-add" data-page="create" id="bnav-create">
+            <span class="bnav-add-btn">➕</span>
+          </a>
+          <a href="#" class="bnav-item" data-page="favorites" id="bnav-favorites">
+            <span class="bnav-icon">⭐</span>
+            <span class="bnav-label">Favorites</span>
+          </a>
+          <a href="#" class="bnav-item" data-page="settings" id="bnav-settings">
+            <span class="bnav-icon">⚙️</span>
+            <span class="bnav-label">Settings</span>
+          </a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Modals -->
+
+    <!-- Profile Modal -->
+    <div class="modal-overlay hidden" id="profile-modal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>👤 Profile</h3>
+          <button class="modal-close" data-modal="profile-modal">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="profile-avatar-wrap">
+            <div class="profile-avatar" id="profile-avatar-display">R</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="profile-name">Your Name</label>
+            <input type="text" id="profile-name" class="form-input" placeholder="Enter your name" maxlength="40" />
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-secondary" data-modal="profile-modal">Cancel</button>
+            <button class="btn btn-primary" id="save-profile">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Modal -->
+    <div class="modal-overlay hidden" id="category-modal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 id="cat-modal-title">📂 Create Category</h3>
+          <button class="modal-close" data-modal="category-modal">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="cat-name">Category Name *</label>
+            <input type="text" id="cat-name" class="form-input" placeholder="e.g. Semester 3" maxlength="40" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Icon</label>
+            <div class="emoji-picker" id="emoji-picker">
+              <button class="emoji-btn active" data-emoji="📂">📂</button>
+              <button class="emoji-btn" data-emoji="📘">📘</button>
+              <button class="emoji-btn" data-emoji="📙">📙</button>
+              <button class="emoji-btn" data-emoji="📗">📗</button>
+              <button class="emoji-btn" data-emoji="📕">📕</button>
+              <button class="emoji-btn" data-emoji="🐍">🐍</button>
+              <button class="emoji-btn" data-emoji="🌳">🌳</button>
+              <button class="emoji-btn" data-emoji="📐">📐</button>
+              <button class="emoji-btn" data-emoji="💻">💻</button>
+              <button class="emoji-btn" data-emoji="🧮">🧮</button>
+              <button class="emoji-btn" data-emoji="⚗️">⚗️</button>
+              <button class="emoji-btn" data-emoji="📊">📊</button>
+            </div>
+          </div>
+          <input type="hidden" id="cat-edit-id" value="" />
+          <div class="form-actions">
+            <button class="btn btn-secondary" data-modal="category-modal">Cancel</button>
+            <button class="btn btn-primary" id="save-category">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Confirm Modal -->
+    <div class="modal-overlay hidden" id="delete-modal">
+      <div class="modal modal-sm">
+        <div class="modal-header">
+          <h3>🗑️ Delete Note?</h3>
+          <button class="modal-close" data-modal="delete-modal">✕</button>
+        </div>
+        <div class="modal-body">
+          <p>This note will be moved to the Recycle Bin.</p>
+          <div class="form-actions">
+            <button class="btn btn-secondary" data-modal="delete-modal">Cancel</button>
+            <button class="btn btn-danger" id="confirm-delete">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Permanent Delete Modal -->
+    <div class="modal-overlay hidden" id="perm-delete-modal">
+      <div class="modal modal-sm">
+        <div class="modal-header">
+          <h3>⚠️ Delete Permanently?</h3>
+          <button class="modal-close" data-modal="perm-delete-modal">✕</button>
+        </div>
+        <div class="modal-body">
+          <p>This action <strong>cannot be undone</strong>. The note will be permanently removed.</p>
+          <div class="form-actions">
+            <button class="btn btn-secondary" data-modal="perm-delete-modal">Cancel</button>
+            <button class="btn btn-danger" id="confirm-perm-delete">Delete Forever</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reminder Modal -->
+    <div class="modal-overlay hidden" id="reminder-modal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>🔔 Add Reminder</h3>
+          <button class="modal-close" data-modal="reminder-modal">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="reminder-note-select">Note</label>
+            <select id="reminder-note-select" class="form-input"></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="reminder-datetime">Date & Time</label>
+            <input type="datetime-local" id="reminder-datetime" class="form-input" />
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-secondary" data-modal="reminder-modal">Cancel</button>
+            <button class="btn btn-primary" id="save-reminder-btn">Save Reminder</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast hidden" id="toast" role="alert" aria-live="polite"></div>
+
+    <!-- Image Preview Lightbox -->
+    <div class="lightbox hidden" id="lightbox">
+      <button class="lightbox-close" id="lightbox-close" aria-label="Close preview">✕</button>
+      <img class="lightbox-img" id="lightbox-img" alt="Preview" />
+    </div>
+
+  </div>
+
+  <script src="db.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
